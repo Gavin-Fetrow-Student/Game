@@ -19,6 +19,8 @@ public class Door : MonoBehaviour
     {
         transform.position = OpenPos;
         IsOpen = true;
+
+        ChangeLights();
     }
 
     // Update is called once per frame
@@ -28,7 +30,7 @@ public class Door : MonoBehaviour
         {
             if (transform.position != OpenPos)
             {
-                if (Vector3.Distance(transform.position, OpenPos) <= 0.5f)
+                if (Vector3.Distance(transform.position, OpenPos) <= 0.01f)
                 {
                     transform.position = OpenPos;
                 }
@@ -42,7 +44,7 @@ public class Door : MonoBehaviour
         {
             if (transform.position != ClosePos)
             {
-                if (Vector3.Distance(transform.position, ClosePos) <= 0.5f)
+                if (Vector3.Distance(transform.position, ClosePos) <= 0.01f)
                 {
                     transform.position = ClosePos;
                 }
@@ -51,6 +53,19 @@ public class Door : MonoBehaviour
                     transform.position = Vector3.Lerp(transform.position, ClosePos, DoorSpeed * Time.deltaTime);
                 }
             }
+        }
+    }
+    public void ChangeLights()
+    {
+        IsOn = !IsOn;
+
+        if (IsOn)
+        {
+            Light.SetActive(true);
+        }
+        else
+        {
+            Light.SetActive(false);
         }
     }
 }

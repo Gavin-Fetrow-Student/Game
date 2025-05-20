@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Door Door;
 
-    // Update is called once per frame
-    void Update()
+    private void OnMouseDown()
     {
-        
+        Door.IsOpen = !Door.IsOpen;
     }
 }
