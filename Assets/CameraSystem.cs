@@ -19,6 +19,8 @@ public class CameraSystem : MonoBehaviour
 
     [SerializeField] private GameObject CameraSystemUI;
 
+    [SerializeField] private PowerSystem Power;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,40 +35,56 @@ public class CameraSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(OpenCameras))
+        if (Power.Power > 0f)
         {
-            CamerasOpen = !CamerasOpen;
-            ShowCamera();
-        }
-
-        if(CoolDownTimer <= 0)
-        {
-            if (Input.GetAxis("Horizontal") > 0)
+            if (Input.GetKeyDown(OpenCameras))
             {
-                Cameras[CurrentCam].SetActive(false);
-                CurrentCam = CurrentCam + 1;
-                if (CurrentCam >= Cameras.Length)
+                CamerasOpen = !CamerasOpen;
+                if (CamerasOpen)
                 {
-                    CurrentCam = 0;
+                    Power.SystemsOn += 1;
                 }
-                GoToCamera(CurrentCam);
-                CoolDownTimer = CoolDownTime;
+                else
+                {
+                    Power.SystemsOn -= 1;
+                }
+                ShowCamera();
             }
-            else if (Input.GetAxis("Horizontal") < 0)
+
+            if (CoolDownTimer <= 0)
             {
-                Cameras[CurrentCam].SetActive(false);
-                CurrentCam = CurrentCam - 1;
-                if (CurrentCam < 0)
+                if (Input.GetAxis("Horizontal") > 0)
                 {
-                    CurrentCam = Cameras.Length - 1;
+                    Cameras[CurrentCam].SetActive(false);
+                    CurrentCam = CurrentCam + 1;
+                    if (CurrentCam >= Cameras.Length)
+                    {
+                        CurrentCam = 0;
+                    }
+                    GoToCamera(CurrentCam);
+                    CoolDownTimer = CoolDownTime;
                 }
-                GoToCamera(CurrentCam);
-                CoolDownTimer = CoolDownTime;
+                else if (Input.GetAxis("Horizontal") < 0)
+                {
+                    Cameras[CurrentCam].SetActive(false);
+                    CurrentCam = CurrentCam - 1;
+                    if (CurrentCam < 0)
+                    {
+                        CurrentCam = Cameras.Length - 1;
+                    }
+                    GoToCamera(CurrentCam);
+                    CoolDownTimer = CoolDownTime;
+                }
+            }
+            else
+            {
+                CoolDownTimer -= Time.deltaTime;
             }
         }
         else
         {
-            CoolDownTimer -= Time.deltaTime;
+            CamerasOpen = false;
+            ShowCamera();
         }
     }
 
