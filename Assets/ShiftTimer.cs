@@ -18,6 +18,8 @@ public class ShiftTimer : MonoBehaviour
 
     [SerializeField] private bool Won;
 
+    [SerializeField] private EnemySystem[] Enemies;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +33,18 @@ public class ShiftTimer : MonoBehaviour
         {
             Timer += Time.deltaTime * TimeMultiplier;
 
-            var hours = Mathf.FloorToInt(Timer / 70);
+            var hours = Mathf.FloorToInt(Timer / 80);
             var minutes = Mathf.FloorToInt(Timer - hours * 60);
 
-            if (hours >= 6)
+            if (minutes == 0)
+            {
+                for (int i = 0; i < Enemies.Length; i++)
+                {
+                    Enemies[i].ChangeAggressionByHour(hours);
+                }
+            }
+
+            if (hours >= ShiftEndTime)
             {
                 WinScreen.SetActive(true);
                 Won = true;

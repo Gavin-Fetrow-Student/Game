@@ -6,7 +6,7 @@ public class CameraSystem : MonoBehaviour
 {
     [SerializeField] private GameObject[] Cameras;
 
-    public int CurrentCam;
+    [SerializeField] private int CurrentCam;
 
     [SerializeField] private KeyCode OpenCameras;
 
@@ -20,6 +20,8 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private GameObject CameraSystemUI;
 
     [SerializeField] private PowerSystem Power;
+
+    [SerializeField] private GameObject CrosshairRemove;
 
     // Start is called before the first frame update
     void Start()
@@ -95,6 +97,7 @@ public class CameraSystem : MonoBehaviour
             Cameras[CurrentCam].SetActive(true);
             CameraSystemUI.SetActive(true);
             MainCamera.SetActive(false);
+            CrosshairRemove.SetActive(false);
         }
         else
         {
@@ -102,6 +105,7 @@ public class CameraSystem : MonoBehaviour
             CameraSystemUI.SetActive(false);
             MainCamera.SetActive(true);
             Cursor.lockState = CursorLockMode.Locked;
+            CrosshairRemove.SetActive(true);
         }
     }
 
