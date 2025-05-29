@@ -26,9 +26,9 @@ public class FirstPersonCamera : MonoBehaviour
         float xAxisInput = Input.GetAxis("Mouse Y");
         float yAxisInput = Input.GetAxis("Mouse X");
 
-        xAxis -= xAxisInput * xAxisTurnRate * Time.deltaTime;
+        xAxis -= xAxisInput * xAxisTurnRate * Time.deltaTime / 4;
         xAxis = Mathf.Clamp(xAxis, -90f, 90f);
-        yAxis += yAxisInput * yAxisTurnRate * Time.deltaTime;
+        yAxis += yAxisInput * yAxisTurnRate * Time.deltaTime / 4;
 
         Quaternion newRotation = Quaternion.Euler(xAxis, yAxis, 0f);
 
