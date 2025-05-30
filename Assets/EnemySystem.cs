@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class EnemySystem : MonoBehaviour
 {
@@ -25,6 +27,10 @@ public class EnemySystem : MonoBehaviour
     [SerializeField] private int MaxAggressionToAdd = 5;
 
     [SerializeField] private int HoursChanged;
+
+    [SerializeField] private PlayableDirector Director;
+
+    [SerializeField] private bool StartedJumpscare;
 
     // Start is called before the first frame update
     void Start()
@@ -79,7 +85,11 @@ public class EnemySystem : MonoBehaviour
 
         if (Targets[CurrentTarget].GetComponent<DestinationPoint>().IsOffice)
         {
-            Debug.Log("You Died");
+            if (!StartedJumpscare)
+            {
+                Director.Play();
+                StartedJumpscare = true;
+            }
         }
 
         NMA.destination = Targets[CurrentTarget].transform.position;
@@ -97,5 +107,10 @@ public class EnemySystem : MonoBehaviour
             TresholdToPass += Random.Range(MinAggressionToAdd, MaxAggressionToAdd);
             HoursChanged += 1;
         }
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
