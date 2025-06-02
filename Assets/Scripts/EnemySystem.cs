@@ -109,8 +109,8 @@ public class EnemySystem : MonoBehaviour
         }
     }
 
-    public void RestartScene()
+    public void LoseScreenLoader()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("LoseScreen");
     }
 }

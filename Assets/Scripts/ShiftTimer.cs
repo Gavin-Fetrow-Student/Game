@@ -15,8 +15,6 @@ public class ShiftTimer : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI ClockText;
 
-    [SerializeField] private GameObject WinScreen;
-
     [SerializeField] private bool Won;
 
     [SerializeField] private EnemySystem[] Enemies;
@@ -34,7 +32,7 @@ public class ShiftTimer : MonoBehaviour
         {
             Timer += Time.deltaTime * TimeMultiplier;
 
-            var hours = Mathf.FloorToInt(Timer / 80);
+            var hours = Mathf.FloorToInt(Timer / 70);
             var minutes = Mathf.FloorToInt(Timer - hours * 60);
 
             if (minutes == 0)
@@ -47,7 +45,7 @@ public class ShiftTimer : MonoBehaviour
 
             if (hours >= ShiftEndTime)
             {
-                WinScreen.SetActive(true);
+                SceneManager.LoadScene("WinScreen");
                 Won = true;
             }
 
